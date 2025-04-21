@@ -9,7 +9,7 @@ import mysql.connector as connector
 mydb=connector.connect(
     host="localhost",
     username="root",
-    password="123456",
+    password="",
     database="job_report"
 )
 cursor=mydb.cursor()
@@ -159,13 +159,13 @@ def updateInDatabase(date,hour,minute,note):
     if result==[]:
         extraMinutes=0
         #print("insert into dailywork (date,hour,minutes) values (%s,%s,%s)", (thisDate, hour, minute))
-        cursor.execute("insert into dailywork (date,hour,minutes,detailedWork) values (%s,%s,%s,%s)",(date,str(hour),str(minute),note))
+        cursor.execute("insert into dailywork (date,hours,minutes,detailedWork) values (%s,%s,%s,%s)",(date,str(hour),str(minute),note))
         mydb.commit()
     else:
         extraMinutes=result[0][len(result[0])-1]
         #print(
          #   "update dailywork set hour='" + hour + "', minutes = '" + minute + "' where date='" + thisDate + "'")
-        cursor.execute("update dailywork set hour='"+str(hour)+"', minutes = '"+str(minute)+"', detailedWork='"+note+"' where date='"+date+"'")
+        cursor.execute("update dailywork set hours='"+str(hour)+"', minutes = '"+str(minute)+"', detailedWork='"+note+"' where date='"+date+"'")
         mydb.commit()
 form = cgi.FieldStorage()
 days=form.getvalue("dates")
